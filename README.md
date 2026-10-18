@@ -1,3 +1,13 @@
+# Tradutor de Arquivos — Preview do aplicativo
+
+[![Abrir demonstração](https://img.shields.io/badge/▶_Preview_do_Tradutor-187e91?style=for-the-badge)](https://ronilima1810.github.io/formulario-de-matricula/portfolio-demos/?demo=tradutor)
+
+> A prévia é **uma simulação web da interface** do tradutor desktop feito com Python/PyQt. Usa apenas frases fictícias pré-programadas, sem tradução por API ou upload de documentos. Para executar o aplicativo real, consulte o código e os requisitos do projeto.
+
+---
+
+## Documentação original
+
 Tradutor de Arquivos
 Este projeto é uma aplicação de tradução de arquivos de texto, construída com PyQt5 para a interface gráfica e a API Google Translator para realizar as traduções. Ele permite que os usuários carreguem arquivos de texto com diversas extensões, traduzam o conteúdo para o idioma desejado e salvem o resultado em um novo arquivo. A aplicação também oferece suporte para reprodução de áudio para indicar a conclusão da tradução.
 
