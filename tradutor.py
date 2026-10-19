@@ -83,6 +83,17 @@ QPushButton#primaryButton {
     font-weight: 850;
 }
 QPushButton#primaryButton:hover { background-color: #a6f4d8; }
+QPushButton:disabled { background-color: #1a2535; color: #71839b; border-color: #2d3c50; }
+QPushButton:focus, QComboBox:focus, QTextEdit:focus {
+    border: 2px solid #70dab9;
+}
+QTextEdit {
+    padding: 16px;
+    border-radius: 10px;
+    selection-color: #08231b;
+}
+QLabel#appTitle { padding-bottom: 8px; }
+QPushButton#primaryButton:pressed { background-color: #4fcfa5; }
 """
 
 class TradutorApp(QWidget):
