@@ -17,38 +17,105 @@ def get_data_file_path(file_name):
         # Estamos no ambiente de desenvolvimento, então retornamos o caminho relativo
         return os.path.join(os.path.dirname(__file__), file_name)
 
+APP_STYLESHEET = """
+QWidget {
+    background-color: #111827;
+    color: #eaf0f9;
+    font-family: 'Segoe UI';
+    font-size: 11pt;
+}
+QLabel#appTitle {
+    color: #f9fbff;
+    font-size: 29pt;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 12px 0 0 0;
+}
+QLabel#appSubtitle {
+    color: #6fe1ba;
+    font-size: 9pt;
+    font-weight: 750;
+    letter-spacing: 2px;
+    padding-bottom: 12px;
+}
+QLabel#appFooter {
+    color: #7b8ba5;
+    font-size: 8pt;
+    letter-spacing: 1px;
+    padding-top: 10px;
+}
+QComboBox, QTextEdit {
+    background-color: #1b2738;
+    color: #ecf3fc;
+    border: 1px solid #39485e;
+    border-radius: 9px;
+    padding: 10px;
+    selection-background-color: #269a7f;
+}
+QComboBox:hover, QTextEdit:focus {
+    border: 1px solid #63dbb3;
+}
+QComboBox::drop-down {
+    border: none;
+    width: 22px;
+}
+QComboBox QAbstractItemView {
+    background-color: #1b2738;
+    color: #ffffff;
+    selection-background-color: #1c806f;
+}
+QTextEdit { font-family: 'Consolas'; font-size: 11pt; line-height: 140%; }
+QPushButton {
+    color: #d9e4f3;
+    background-color: #253449;
+    border: 1px solid #435269;
+    border-radius: 9px;
+    min-height: 44px;
+    padding: 8px 16px;
+    font-weight: 700;
+}
+QPushButton:hover { background-color: #30435b; border-color: #69d9b7; }
+QPushButton:pressed { background-color: #192a3d; }
+QPushButton#primaryButton {
+    color: #0c2823;
+    background-color: #74e4bb;
+    border-color: #74e4bb;
+    font-weight: 850;
+}
+QPushButton#primaryButton:hover { background-color: #a6f4d8; }
+"""
+
 class TradutorApp(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Tradutor de Arquivos")
-        self.setGeometry(100, 100, 800, 600)
+        self.setWindowTitle("Lumus File Translator | Desktop")
+        self.setGeometry(120, 80, 960, 700)
+        self.setMinimumSize(760, 560)
 
         # Configurar a imagem de fundo
-        self.setAutoFillBackground(True)
-        self.palette = QPalette()
-        self.set_background()
+        # O fundo usa o design system QSS, sem imagem esticada ou ruído visual.
+        self.setAutoFillBackground(False)
 
         # Inicializar o mixer do pygame para som
         pygame.mixer.init()
 
         # Layout principal
         layout = QVBoxLayout()
+        layout.setContentsMargins(30, 26, 30, 24)
+        layout.setSpacing(18)
 
         # Título
-        titulo = QLabel("Tradutor de Arquivos")
+        titulo = QLabel("FILE TRANSLATOR")
         titulo.setAlignment(Qt.AlignCenter)
         layout.addWidget(titulo)
 
         # Estilizando o título com a fonte Crowned (assumindo que está instalada ou fornecida)
-        titulo.setStyleSheet("""
-            color: black;
-            margin: 20px 0;
-        """)
+        titulo.setObjectName("appTitle")
 
         # Definir a fonte "Crowned" (caso esteja disponível no sistema ou seja fornecida)
         try:
-            font = QFont("Crowned", 36)  # Definir tamanho 36 para a fonte
+            font = QFont("Segoe UI", 29)  # Definir tamanho 36 para a fonte
             titulo.setFont(font)
         except:
             print("Fonte 'Crowned' não encontrada, usando a fonte padrão.")
@@ -82,11 +149,16 @@ class TradutorApp(QWidget):
         idioma_destino_layout.addWidget(self.idioma_destino_var, alignment=Qt.AlignCenter)
         idioma_layout.addLayout(idioma_destino_layout)
 
+        subtitulo = QLabel("WORKSPACE  /  DOCUMENT TRANSLATION")
+        subtitulo.setObjectName("appSubtitle")
+        subtitulo.setAlignment(Qt.AlignCenter)
+        layout.addWidget(subtitulo)
+
         layout.addLayout(idioma_layout)
 
         # Caixa de texto com fundo transparente e rolagem
         self.caixa_texto = QTextEdit(self)
-        self.caixa_texto.setStyleSheet("background: rgba(255, 255, 255, 0.5); border: 1px solid gray;")
+        self.caixa_texto.setPlaceholderText("O conteúdo do documento aparecerá aqui. Abra um arquivo para iniciar.")
         layout.addWidget(self.caixa_texto)
 
         # Botões
@@ -97,6 +169,7 @@ class TradutorApp(QWidget):
         btn_layout.addWidget(btn_abrir)
 
         btn_traduzir = QPushButton("Traduzir Arquivo")
+        btn_traduzir.setObjectName("primaryButton")
         btn_traduzir.clicked.connect(self.traduzir_arquivo)
         btn_layout.addWidget(btn_traduzir)
 
@@ -107,12 +180,14 @@ class TradutorApp(QWidget):
         layout.addLayout(btn_layout)
 
         # Assinatura
-        assinatura = QLabel("Criado por Roni o WB-DEV")
+        assinatura = QLabel("LUMUS TECH    •    DOCUMENT WORKSPACE    •    DESKTOP APPLICATION")
         assinatura.setAlignment(Qt.AlignCenter)
+        assinatura.setObjectName("appFooter")
         layout.addWidget(assinatura)
 
         # Definindo o layout da janela
         self.setLayout(layout)
+        self.setStyleSheet(APP_STYLESHEET)
 
     def set_background(self):
         """Define o fundo para preencher a janela."""
@@ -123,7 +198,6 @@ class TradutorApp(QWidget):
 
     def resizeEvent(self, event):
         """Redefine o fundo ao redimensionar a janela."""
-        self.set_background()
         super().resizeEvent(event)
 
     def abrir_arquivo(self):
