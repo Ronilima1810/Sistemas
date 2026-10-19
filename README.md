@@ -1,62 +1,47 @@
-# Tradutor de Arquivos — Preview do aplicativo
+# Lumus File Translator
 
-[![Abrir demonstração](https://img.shields.io/badge/▶_Preview_do_Tradutor-187e91?style=for-the-badge)](https://ronilima1810.github.io/formulario-de-matricula/portfolio-demos/?demo=tradutor)
+**Aplicativo desktop Python com interface Qt de estilo corporativo.** Projeto de tradução de documentos com seleção de idiomas, visualização do conteúdo, exportação e feedback sonoro.
 
-> A prévia é **uma simulação web da interface** do tradutor desktop feito com Python/PyQt. Usa apenas frases fictícias pré-programadas, sem tradução por API ou upload de documentos. Para executar o aplicativo real, consulte o código e os requisitos do projeto.
+[Visualizar interface demonstrativa](https://ronilima1810.github.io/formulario-de-matricula/portfolio-demos/?demo=tradutor) · [Código-fonte](tradutor.py)
 
----
+> O preview web usa textos fictícios para demonstrar a experiência de uso. Ele não carrega arquivos nem executa o motor de tradução real.
 
-## Documentação original
+## Produto
 
-Tradutor de Arquivos
-Este projeto é uma aplicação de tradução de arquivos de texto, construída com PyQt5 para a interface gráfica e a API Google Translator para realizar as traduções. Ele permite que os usuários carreguem arquivos de texto com diversas extensões, traduzam o conteúdo para o idioma desejado e salvem o resultado em um novo arquivo. A aplicação também oferece suporte para reprodução de áudio para indicar a conclusão da tradução.
+A interface PyQt5 original foi modernizada, preservando a lógica do tradutor: tema escuro profissional, tipografia Segoe UI, áreas de edição, botões destacados, seleção de idiomas e responsividade básica da janela desktop.
 
-Funcionalidades
-Suporte a múltiplos formatos de arquivo: Aceita arquivos de texto como .txt, .html, .log, .xml, e outros.
-Seleção de idiomas: O usuário pode escolher o idioma de entrada e o idioma de saída para a tradução. Suporta vários idiomas, incluindo inglês, português, espanhol, francês, alemão, entre outros.
-Tradução de grandes textos: A aplicação é capaz de traduzir textos com mais de 3 mil caracteres, dividindo automaticamente o conteúdo em partes menores para garantir a tradução eficiente.
-Interface gráfica intuitiva: Utiliza PyQt5 para criar uma interface limpa e funcional, com elementos de interação como caixas de texto e botões.
-Reprodução de áudio: Ao concluir a tradução, a aplicação reproduz um som para informar ao usuário que a operação foi concluída com sucesso.
-Salvar arquivo traduzido: O arquivo traduzido pode ser salvo em seu formato original.
-Como usar
-Abrir um arquivo: Clique no botão "Abrir Arquivo" e selecione o arquivo de texto que deseja traduzir. O aplicativo suporta arquivos com as extensões .txt, .html, .log, .xml e outros.
-Selecionar os idiomas: Selecione o idioma de origem e o idioma de destino para a tradução. A tradução automática será realizada com a ajuda da API Google Translator.
-Traduzir o arquivo: Após carregar o arquivo e escolher os idiomas, clique em "Traduzir Arquivo". O conteúdo será traduzido e exibido na caixa de texto. A aplicação lida com textos maiores que 3 mil caracteres, dividindo-os em partes para tradução.
-Salvar o arquivo traduzido: Clique em "Salvar Arquivo" para salvar o conteúdo traduzido em um novo arquivo de texto.
-Instalação
-Clone o repositório:
+## Tecnologia
 
-bash
-Copiar
-Editar
-git clone https://github.com/seu-usuario/tradutor-arquivos.git
-Navegue até o diretório do projeto:
+- **GUI:** PyQt5 e QSS (Qt Style Sheets);
+- **Tradução:** `deep-translator`, com serviço externo de tradução;
+- **Manipulação:** Python padrão, XML, BeautifulSoup;
+- **Áudio:** Pygame para aviso de conclusão;
+- **Distribuição:** fonte Python e executável legado incluído como referência.
 
-bash
-Copiar
-Editar
-cd tradutor-arquivos
-Instale as dependências:
+## Instalação e execução
 
-bash
-Copiar
-Editar
-pip install -r requirements.txt
-Execute o aplicativo:
+No Windows, instale Python 3.10+ e execute:
 
-bash
-Copiar
-Editar
-python tradutor_app.py
-Dependências
-PyQt5: Para a interface gráfica.
-pygame: Para a reprodução de áudio.
-deep_translator: Para a tradução de texto utilizando a API do Google.
-Você pode instalar as dependências utilizando o arquivo requirements.txt.
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python tradutor.py
+```
 
-Contribuição
-Contribuições são bem-vindas! Se você tiver melhorias, correções de bugs ou novos recursos que gostaria de adicionar, fique à vontade para abrir um pull request.
+No Linux/macOS:
 
-Licença
-Este projeto está licenciado sob a Licença MIT - consulte o arquivo LICENSE para mais detalhes.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python tradutor.py
+```
 
+**A aplicação real requer internet para o serviço de tradução.** Revise políticas de privacidade antes de enviar documentos reais a serviços de terceiros.
+
+## Interface e segurança
+
+O redesign mudou apresentação, espaçamentos, temas, bordas e hierarquia visual, sem substituir o algoritmo principal de abertura, tradução e gravação de arquivos. Não armazena senhas ou chaves neste repositório.
+
+O arquivo `tradutor.exe` existente é um binário anterior: **não foi recompilado por este redesign**. Para obter o novo visual, execute `tradutor.py` ou faça um novo build do executável após validar as dependências.
