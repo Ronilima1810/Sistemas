@@ -1,0 +1,4 @@
+PyQt5>=5.15,<6
+deep-translator>=1.11,<2
+beautifulsoup4>=4.12,<5
+pygame>=2.5,<3
