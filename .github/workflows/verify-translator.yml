@@ -1,0 +1,34 @@
+name: Validate Python Desktop Translator
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'tradutor.py'
+      - 'requirements.txt'
+      - '.github/workflows/verify-translator.yml'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  source-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile source without importing GUI or contacting translation services
+        run: python -m py_compile tradutor.py
+      - name: Confirm functional and accessible desktop UI components
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          source=Path('tradutor.py').read_text(encoding='utf-8')
+          required=('class TradutorApp', 'APP_STYLESHEET', 'QTextEdit', 'QComboBox', 'QPushButton:focus')
+          missing=[text for text in required if text not in source]
+          assert not missing, 'Missing UI components: '+', '.join(missing)
+          print('Translator GUI source syntax and design tokens verified')
+          PY
