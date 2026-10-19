@@ -1,0 +1,26 @@
+name: Verify Translator Source
+on:
+  push:
+    branches: [master]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate syntax and source imports without starting GUI
+        run: |
+          python -m py_compile tradutor.py
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('tradutor.py').read_text(encoding='utf-8')
+          assert 'APP_STYLESHEET' in s
+          assert 'def traduzir_arquivo' in s
+          assert 'def salvar_arquivo' in s
+          print('Translator desktop source validated.')
+          PY
